@@ -52,15 +52,16 @@ router.get('/search', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-router.get('/:bookId', async (req, res) => {
-    try {
-      const book = await Book.findOne({ bookId: req.params.bookId });
-      if (!book) return res.status(404).json({ error: 'Book not found' });
-      res.json(book);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  });
+router.get('/:id', async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) return res.status(404).json({ message: 'Book not found' });
+    res.json(book);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
   
   // Update book by bookId
   router.put('/:bookId', async (req, res) => {
